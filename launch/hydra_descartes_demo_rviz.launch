@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="rvizconfig" default="$(find hydra_demos)/rviz/hydra_demos.rviz" />
+    <arg name="use_gui" default="false" />
+    
+    <!-- Specify the config files to use -->
+    <rosparam ns="descartes_demo" command="load" file="$(find hydra_demos)/config/moveit_cpp.yaml"/>
+
+    <!-- Planning Pipeline -->
+    <include ns="/descartes_demo/ompl" file="$(find hydra_moveit_config)/launch/ompl_planning_pipeline.launch.xml"/>
+    
+    <!-- Trajectory execution -->
+    <include ns="descartes_demo" file="$(find hydra_moveit_config)/launch/trajectory_execution.launch.xml">
+        <arg name="moveit_controller_manager" value="fake"/>
+    </include>
+
+    <!-- Load the URDF, SRDF and other .yaml configuration files on the param server -->
+    <include file="$(find hydra_moveit_config)/launch/planning_context.launch">
+      <arg name="load_robot_description" value="true"/>
+    </include>
+
+    <!-- send fake joint values -->
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" unless="$(arg use_gui)">
+      <rosparam param="source_list">[descartes_demo/fake_controller_joint_states]</rosparam>
+    </node>
+    
+    <node name="joint_state_publisher" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" if="$(arg use_gui)">
+      <rosparam param="source_list">[descartes_demo/fake_controller_joint_states]</rosparam>
+    </node>
+
+    <!-- Start robot state publisher -->
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"  respawn="true"/>
+
+    <!-- Launch visualization -->
+    <node pkg="rviz" type="rviz" name="$(anon rviz)" args="-d $(arg rvizconfig)" output="screen">
+        <rosparam command="load" file="$(find hydra_moveit_config)/config/kinematics.yaml"/>
+    </node>
+
+</launch>

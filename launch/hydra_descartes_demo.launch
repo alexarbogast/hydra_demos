@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<launch>
+    <node pkg="hydra_demos" type="hydra_demos_descartes_demo_node" name="descartes_demo" output="screen"/>
+</launch>
