@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<launch>
+    <node pkg="hydra_demos" type="hydra_demos_moveit_multi_demo" name="moveit_multi_demo" output="screen"/>
+</launch>

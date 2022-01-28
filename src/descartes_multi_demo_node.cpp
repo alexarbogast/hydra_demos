@@ -14,7 +14,12 @@ int main(int argc, char** argv)
     spinner.start();
 
     // configurations
-    CartesianPlannerConfig rob1_config, rob2_config, rob3_config;
+    CartesianPlannerConfig positioner_config, rob1_config, rob2_config, rob3_config;
+    positioner_config.group_name = "positioner_planning_group";
+    positioner_config.world_frame = "world";
+    positioner_config.base_link = "rotary_table_base";
+    positioner_config.tip_link = "positioner";
+    
     rob1_config.group_name = "rob1_planning_group";
     rob1_config.world_frame = "positioner_static";
     rob1_config.base_link = "rob1_base_link";
@@ -30,7 +35,8 @@ int main(int argc, char** argv)
     rob3_config.base_link = "rob3_base_link";
     rob3_config.tip_link = "rob3_typhoon_extruder";
 
-    DescartesMultiDemo::PlannerConfigs planner_configs;
+    PlannerConfigs planner_configs;
+    planner_configs.push_back(positioner_config);
     planner_configs.push_back(rob1_config);
     planner_configs.push_back(rob2_config);  
     planner_configs.push_back(rob3_config);  
@@ -43,12 +49,48 @@ int main(int argc, char** argv)
     gcode_core::GcodeBase gcode;
     gcode_core::Marlin::ParseGcode(filepath, gcode);
 
-    ros::Duration(15.0).sleep();
+    // first pose
+    Eigen::Isometry3d rob1_pose1 = Eigen::Isometry3d::Identity() * Eigen::Translation3d(-0.25, -0.25, 0.3) *
+                                  Eigen::Quaterniond(0, 0, 1.0, 0);
+
+    Eigen::Isometry3d rob2_pose1 = Eigen::Isometry3d::Identity() * Eigen::Translation3d(0.1, 0, 0.3) *
+                                  Eigen::Quaterniond(0, 1.0, 0, 0);
+
+    Eigen::Isometry3d rob3_pose1 = Eigen::Isometry3d::Identity() * Eigen::Translation3d(-0.25, 0.25, 0.3) *
+                                  Eigen::Quaterniond(0, 0, 1.0, 0);
+
+    Eigen::Isometry3d positioner_pose1 = Eigen::Isometry3d::Identity() * Eigen::Translation3d(0, 0, 0.20955) *
+                                        Eigen::Quaterniond(0.9848078, 0, 0, 0.1736482);
+
+    // second pose
+    Eigen::Isometry3d rob1_pose2 = Eigen::Isometry3d::Identity() * Eigen::Translation3d(-0.1, -0.3, 0.3) *
+                                   Eigen::Quaterniond(0, 0.258819, 0.9659258, 0);
+
+    Eigen::Isometry3d rob2_pose2 = Eigen::Isometry3d::Identity() * Eigen::Translation3d(0.2, 0.1, 0.3) *
+                                  Eigen::Quaterniond(0, 1.0, 0, 0);
+
+    Eigen::Isometry3d rob3_pose2 = Eigen::Isometry3d::Identity() * Eigen::Translation3d(-0.2, 0.3, 0.3) *
+                                  Eigen::Quaterniond(0, 0, 1.0, 0);
+
+    Eigen::Isometry3d positioner_pose2 = Eigen::Isometry3d::Identity() * Eigen::Translation3d(0, 0, 0.20955) *
+                                        Eigen::Quaterniond(0.8660254 , 0, 0, -0.5);
+    
+    EigenSTL::vector_Isometry3d pose1 = { positioner_pose1, rob1_pose1, rob2_pose1, rob3_pose1 };
+    EigenSTL::vector_Isometry3d pose2 = { positioner_pose2, rob1_pose2, rob2_pose2, rob3_pose2 };
+    
     // execute trajectory
-    application.moveHome();
+    const int number_of_cycles = 5;
+    for (int i = 0; i < number_of_cycles; i++)
+    {
+        application.moveHome();
 
-    ros::waitForShutdown();
+        application.MultiMoveToPose(pose1);
+        application.MultiMoveToPose(pose2);
+
+        application.moveHome();
+    }
+
     spinner.stop();
-
+    ros::waitForShutdown();
     return 0;
 }

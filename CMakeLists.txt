@@ -36,6 +36,9 @@ include_directories(${catkin_INCLUDE_DIRS})
 add_executable(${PROJECT_NAME}_moveit_demo src/moveit_demo.cpp)
 target_link_libraries(${PROJECT_NAME}_moveit_demo ${catkin_LIBRARIES})
 
+add_executable(${PROJECT_NAME}_moveit_multi_demo src/moveit_multi_demo.cpp)
+target_link_libraries(${PROJECT_NAME}_moveit_multi_demo ${catkin_LIBRARIES})
+
 add_library(${PROJECT_NAME}_planners src/cartesian_planner.cpp)
 target_link_libraries(${PROJECT_NAME}_planners ${catkin_LIBRARIES})
 target_include_directories(${PROJECT_NAME}_planners PUBLIC
