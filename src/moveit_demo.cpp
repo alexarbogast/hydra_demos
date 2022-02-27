@@ -1,7 +1,8 @@
+#include <ros/package.h>
+#include <eigen_conversions/eigen_msg.h>
 #include <moveit/move_group_interface/move_group_interface.h>
 #include <moveit/planning_interface/planning_interface.h>
 
-#include <eigen_conversions/eigen_msg.h>
 #include "gcode_core/core/gcode.h"
 #include "gcode_core/flavor_impl/marlin_gcode.h"
 

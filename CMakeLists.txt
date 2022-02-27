@@ -6,6 +6,7 @@ find_package(catkin REQUIRED COMPONENTS
     moveit_ros_planning
     moveit_ros_planning_interface
     moveit_msgs
+    bio_ik
     descartes_core
     descartes_moveit
     descartes_trajectory
@@ -20,6 +21,7 @@ catkin_package(CATKIN_DEPENDS
     moveit_ros_planning
     moveit_ros_planning_interface
     moveit_msgs
+    bio_ik
     descartes_core
     descartes_moveit
     descartes_trajectory
@@ -77,4 +79,20 @@ target_include_directories(${PROJECT_NAME}_descartes_multi_demo_node PUBLIC
     "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
     "$<INSTALL_INTERFACE:include>")
 target_include_directories(${PROJECT_NAME}_descartes_multi_demo_node SYSTEM PUBLIC
+    ${catkin_INCLUDE_DIRS})
+
+add_library(${PROJECT_NAME}_bio_ik_demo src/bio_ik_demo.cpp)
+target_link_libraries(${PROJECT_NAME}_bio_ik_demo ${catkin_LIBRARIES})
+target_include_directories(${PROJECT_NAME}_bio_ik_demo PUBLIC
+    "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
+    "$<INSTALL_INTERFACE:include>")
+target_include_directories(${PROJECT_NAME}_bio_ik_demo SYSTEM PUBLIC
+    ${catkin_INCLUDE_DIRS})
+
+add_executable(${PROJECT_NAME}_bio_ik_demo_node src/bio_ik_demo_node.cpp)
+target_link_libraries(${PROJECT_NAME}_bio_ik_demo_node ${PROJECT_NAME}_bio_ik_demo ${catkin_LIBRARIES})
+target_include_directories(${PROJECT_NAME}_bio_ik_demo_node PUBLIC
+    "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
+    "$<INSTALL_INTERFACE:include>")
+target_include_directories(${PROJECT_NAME}_bio_ik_demo_node SYSTEM PUBLIC
     ${catkin_INCLUDE_DIRS})

@@ -28,7 +28,7 @@ int main(int argc, char** argv)
     DescartesDemo application(nh, config);
 
     // open gcode file to extract path
-    std::string filepath = "/home/alex/Documents/parts/cube_bottom.gcode";
+    std::string filepath = "/home/alex/Documents/parts/simple_cube.gcode";
 
     gcode_core::GcodeBase gcode;
     gcode_core::Marlin::ParseGcode(filepath, gcode);
@@ -49,12 +49,13 @@ int main(int argc, char** argv)
             waypoints.push_back(target_pose);
         }
         
+        ROS_INFO_STREAM("EXECUTING:\n" << *bead);
         const double eef_step = 0.005;
         application.planAndExecuteCartesianPath(waypoints, eef_step);
     }  
 
     application.moveHome();
     spinner.stop();
-
+    ros::waitForShutdown();
     return 0;
 }

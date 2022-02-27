@@ -14,6 +14,7 @@
   <depend>moveit_ros_planning</depend>
   <depend>moveit_ros_planning_interface</depend>
   <depend>moveit_msgs</depend>
+  <depend>bio_ik</depend>
   <depend>descartes_core</depend>  
   <depend>descartes_moveit</depend>
   <depend>descartes_trajectory</depend>
