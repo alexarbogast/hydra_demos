@@ -11,6 +11,8 @@ int main(int argc, char** argv)
     ros::AsyncSpinner spinner(1);
     spinner.start();
 
+    ros::Duration(1.0).sleep();
+
     BioIKDemo application;
 
     // create multi-robot path
@@ -20,19 +22,19 @@ int main(int argc, char** argv)
                                       {-0.2,  0.2, 0.0}};
 
     CartesianPath path1;
-    path1.path_ = {path[2], path[3], path[0], path[1], path[2]};
-    path1.base_frame_ = "positioner";
-    path1.tip_link_ = "rob1_typhoon_extruder";
+    path1.path = {path[2], path[3], path[0], path[1], path[2]};
+    path1.base_frame = "positioner";
+    path1.tip_link = "rob1_typhoon_extruder";
 
     CartesianPath path2;
-    path2.path_ = {path[0], path[1], path[2], path[3], path[0]};
-    path2.base_frame_ = "positioner";
-    path2.tip_link_ = "rob2_typhoon_extruder";
+    path2.path = {path[0], path[1], path[2], path[3], path[0]};
+    path2.base_frame = "positioner";
+    path2.tip_link = "rob2_typhoon_extruder";
 
     CartesianPath path3;
-    path3.path_ = {path[3], path[0], path[1], path[2], path[3]};
-    path3.base_frame_ = "positioner";
-    path3.tip_link_ = "rob3_typhoon_extruder";
+    path3.path = {path[3], path[0], path[1], path[2], path[3]};
+    path3.base_frame = "positioner";
+    path3.tip_link = "rob3_typhoon_extruder";
 
     MultiRobotPath multi_path = {path1, path2, path3};
     

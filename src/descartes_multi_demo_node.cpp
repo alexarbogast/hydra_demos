@@ -3,6 +3,30 @@
 
 using namespace hydra_demos;
 
+class CompositeMoveitStateAdapter
+{
+public:
+    CompositeMoveitStateAdapter(const moveit::core::RobotState& robot_state, const std::string& group_name)
+    {
+        
+    }
+
+};
+
+class DescartesCompositePlanner
+{
+public:
+    DescartesCompositePlanner(const ros::NodeHandle& nh)
+    {
+        moveit_cpp_ptr_.reset(new moveit_cpp::MoveItCpp(nh));
+
+        descartes_robot_model_.reset(new descartes_moveit::MoveitStateAdapter());
+    }
+
+private:
+    moveit_cpp::MoveItCppPtr moveit_cpp_ptr_;
+    descartes_core::RobotModelPtr descartes_robot_model_;
+};
 
 int main(int argc, char** argv)
 {
