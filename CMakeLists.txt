@@ -15,6 +15,7 @@ find_package(catkin REQUIRED COMPONENTS
     trajectory_msgs
     eigen_conversions
     gcode_core
+    mrmf_ros
 )
 catkin_package(CATKIN_DEPENDS
     moveit_core
@@ -30,6 +31,7 @@ catkin_package(CATKIN_DEPENDS
     trajectory_msgs
     eigen_conversions
     gcode_core
+    mrmf_ros
     xacro
 )
 

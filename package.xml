@@ -23,4 +23,5 @@
   <depend>trajectory_msgs</depend>
   <depend>eigen_conversions</depend>
   <depend>gcode_core</depend>
+  <depend>mrmf_ros</depend>
 </package>
