@@ -15,6 +15,7 @@ find_package(catkin REQUIRED COMPONENTS
     trajectory_msgs
     eigen_conversions
     gcode_core
+    mrmf_core
     mrmf_ros
 )
 catkin_package(CATKIN_DEPENDS
@@ -31,6 +32,7 @@ catkin_package(CATKIN_DEPENDS
     trajectory_msgs
     eigen_conversions
     gcode_core
+    mrmf_core
     mrmf_ros
     xacro
 )
@@ -97,4 +99,12 @@ target_include_directories(${PROJECT_NAME}_bio_ik_demo_node PUBLIC
     "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
     "$<INSTALL_INTERFACE:include>")
 target_include_directories(${PROJECT_NAME}_bio_ik_demo_node SYSTEM PUBLIC
+    ${catkin_INCLUDE_DIRS})
+
+add_executable(${PROJECT_NAME}_mrmf_demo_node src/mrmf_demo_node.cpp)
+target_link_libraries(${PROJECT_NAME}_mrmf_demo_node ${catkin_LIBRARIES})
+target_include_directories(${PROJECT_NAME}_mrmf_demo_node PUBLIC
+    "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
+    "$<INSTALL_INTERFACE:include>")
+target_include_directories(${PROJECT_NAME}_mrmf_demo_node SYSTEM PUBLIC
     ${catkin_INCLUDE_DIRS})

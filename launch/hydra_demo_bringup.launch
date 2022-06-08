@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<launch>
+    <include file="$(find hydra_control)/launch/hydra_control.launch"/>
+    <include file="$(find hydra_demos)/launch/hydra_visualize.launch"/>
+
+    <include file="$(find hydra_moveit_config)/launch/move_group.launch">
+        <arg name="moveit_controller_manager" value="hydra"/>
+    </include>
+</launch>

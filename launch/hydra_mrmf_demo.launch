@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<launch>
+    <node pkg="hydra_demos" type="hydra_demos_mrmf_demo_node" name="mrmf_demo_node" output="screen"/>
+</launch>
