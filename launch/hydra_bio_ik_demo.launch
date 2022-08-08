@@ -1,4 +1,0 @@
-<?xml version="1.0"?>
-<launch>
-    <node pkg="hydra_demos" type="hydra_demos_bio_ik_demo_node" name="bio_ik_demo" output="screen"/>
-</launch>
