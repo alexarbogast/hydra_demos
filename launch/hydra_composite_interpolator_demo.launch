@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<launch>
+    <node pkg="hydra_demos" type="hydra_demos_composite_interpolator_node" name="composite_interpolator_node" output="screen"/>
+</launch>
